@@ -11,6 +11,10 @@ var volhistory = [];
 var fullhistory = [];
 var song_volhistory = [];
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function toggleSong() {
   if (song.isPlaying()) {
     song.pause();
@@ -19,14 +23,20 @@ function toggleSong() {
   }
 }
 
+function reload_page(){
+	location.reload();
+}
 function preload() {
   song = loadSound('test.mp4');
 }
 
 function setup() {
-  createCanvas(1300, 500);
-  button = createButton('toggle');
+  sleep(10000);
+  createCanvas(800, 500);
+  button = createButton('Pause');
+  restart_button = createButton('Restart')
   button.mousePressed(toggleSong);
+  restart_button.mousePressed(reload_page);
   song.play();
   amp = new p5.Amplitude();
   amp.setInput(song);

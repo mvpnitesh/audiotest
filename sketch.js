@@ -26,18 +26,24 @@ function toggleSong() {
 function reload_page(){
 	location.reload();
 }
-function preload() {
-  song = loadSound('test.mp4');
+function preload(){
+song = loadSound('test.mp4');
+}
+function preload_song(){
+      song.play();
+	  start_button.hide()
 }
 
 function setup() {
   sleep(10000);
   createCanvas(800, 500);
+  start_button = createButton('Start');
   button = createButton('Pause');
   restart_button = createButton('Restart')
   button.mousePressed(toggleSong);
+  start_button.mousePressed(preload_song)
   restart_button.mousePressed(reload_page);
-  song.play();
+  song.pause();
   amp = new p5.Amplitude();
   amp.setInput(song);
   mic = new p5.AudioIn();
@@ -48,7 +54,7 @@ function draw() {
   
   background(0);
   var song_vol = amp.getLevel();
-  var vol = mic.getLevel()*10;
+  var vol = mic.getLevel()*20;
   volhistory.push(vol);
   song_volhistory.push(song_vol);
   fullhistory.push(vol);
@@ -67,8 +73,9 @@ function draw() {
   }
   endShape();
   stroke(255, 0, 0);
-  stroke(255,255,255);
-    line(0,250,1300,250);
+  stroke(255,127,80);
+  line(0,250,1300,250);
+  line(0,350,1300,350);
   beginShape();
   for (var i = 0; i < volhistory.length; i++) {  
    var y = map(volhistory[i], 0, 1, height*0.5, 0);
@@ -87,10 +94,11 @@ function draw() {
   //pop();
   
 
-  stroke(255, 0, 0);
-  line(volhistory.length, 0, volhistory.length, height);
-  stroke(255,255,255);
-  line(100,250,1300,250);
+  //stroke(255, 0, 0);
+  //line(volhistory.length, 0, volhistory.length, height);
+  //stroke(255,255,255);
+  //line(100,250,1300,250);
+  //line(200,250,1300,250);
   //ellipse(100, 100, 200, vol * 200);
 
 }
